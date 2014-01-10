@@ -29,7 +29,9 @@ App.LoginController = Ember.Controller.extend({
     });
   },
 
+  actions: {
   login: function() {
+    console.log('login starts');
 
     var self = this, data = this.getProperties('username', 'password');
 
@@ -42,7 +44,9 @@ App.LoginController = Ember.Controller.extend({
       if (response.success) {
         // Save the token and transition to where originally intended.
         self.set('token', response.token);
+        console.log(response.token);
       }
     });
+  }
   }
 });
