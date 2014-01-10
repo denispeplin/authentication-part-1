@@ -1,6 +1,23 @@
 var express = require('express'),
-    app = express();
+    app = express(),
+    winston = require('winston'),
+    expressWinston = require('express-winston');
 app.use(express.bodyParser());
+
+app.configure(function(){
+    app.use(expressWinston.logger({
+      transports: [
+        new winston.transports.Console({
+          json: false,
+          timestamp: true,
+          colorize: true
+        })
+      ],
+      meta: false,
+      msg: "HTTP {{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
+    }));
+    app.use(app.router);
+});
 
 var ARTICLES = [
   {
